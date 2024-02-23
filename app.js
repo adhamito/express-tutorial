@@ -32,5 +32,5 @@ app.delete("/users/:id", (req, res) => {
 });
 
 app.listen(port, (res) => {
-  res.send("Server is running");
+  console.log("Server is running");
 });
