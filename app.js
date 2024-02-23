@@ -12,11 +12,25 @@ app.get("/users", (req, res) => {
   res.status(201).send(users);
 });
 app.post("/users", (req, res) => {
-  console.log(req.body);
+  const index = users.findIndex((user) => user.id === req.body.id);
+  if (index !== -1) {
+    res.status(400).send("User already exists");
+    return;
+  }
   users.push(req.body);
-  res.send("created");
+  res.status(201).send("User added");
+});
+app.delete("/users/:id", (req, res) => {
+  const id = req.params.id;
+  const index = users.findIndex((user) => user.id === id);
+  if (index === -1) {
+    res.status(404).send("User not found");
+    return;
+  }
+  users.splice(index, 1);
+  res.send("deleted");
 });
 
-app.listen(port, () => {
-  console.log(port);
+app.listen(port, (res) => {
+  res.send("Server is running");
 });
